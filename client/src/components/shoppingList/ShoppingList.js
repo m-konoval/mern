@@ -1,4 +1,13 @@
 import React, { Component } from 'react';
+
+
+// REDUX
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getItems } from '../../actions/itemActions';
+
+
+// layouts
 import {
     Container,
     ListGroup,
@@ -11,14 +20,10 @@ import uuid from 'uuid';
 
 
 export class ShoppingList extends Component {
-    state = {
-        items: [
-            { id: uuid(), name: 'Some1' },
-            { id: uuid(), name: 'Some2' },
-            { id: uuid(), name: 'Some3' },
-            { id: uuid(), name: 'Some4' }
-        ]
-    } // state
+
+    componentDidMount() {
+        this.props.getItems();
+    } // componentDidMount
 
 
     addItem = () => {
@@ -50,7 +55,7 @@ export class ShoppingList extends Component {
 
 
     render() {
-        const { items } = this.state;
+        const { items } = this.props.item;
 
         return (
             <Container>
@@ -87,4 +92,19 @@ export class ShoppingList extends Component {
     } // render
 } //ShoppingList
 
-export default ShoppingList
+
+// Add types for Props
+ShoppingList.PropTypes = { // eslint-disable-line
+    getItems: PropTypes.func.isRequired,
+    item: PropTypes.object.isRequired
+};
+
+
+// Callback for chenge state to props
+const mapStateToProps = (state) => ({
+    item: state.item
+});
+
+
+// export
+export default connect(mapStateToProps, { getItems })(ShoppingList);
