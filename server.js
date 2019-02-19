@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const { mongoURI } = require('./config/keys');
+const { mongoURI, localMongoURI } = require('./config/keys');
 
 
 // Require Routes
@@ -19,8 +19,12 @@ mongoose.Promise = global.Promise;
 
 
 // Test Connection to DB
+
+const DB_SRTING = process.env.NODE_ENV === 'production' ? mongoURI : localMongoURI;
+
+
 mongoose
-    .connect(mongoURI)
+    .connect(DB_SRTING, { useNewUrlParser: true })
     .then(() => console.log('connect DB: success'))
     .catch(err => console.log(`connect DB: fail, error: ${err}`));
 
