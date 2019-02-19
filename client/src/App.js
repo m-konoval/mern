@@ -6,10 +6,12 @@ import store from './store';
 // Styles Css
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { Container } from 'reactstrap';
 
 
 // Components
 import AppNavBar from './components/AppNavBar';
+import ItemModal from './components/shoppingList/itemModal';
 import ShoppingList from './components/shoppingList/ShoppingList';
 
 
@@ -20,7 +22,11 @@ class App extends Component {
             <Provider store={store}>
                 <Fragment>
                     <AppNavBar />
-                    <ShoppingList />
+
+                    <Container>
+                        <ItemModal />
+                        <ShoppingList />
+                    </Container>
                 </Fragment>
             </Provider>
         );
